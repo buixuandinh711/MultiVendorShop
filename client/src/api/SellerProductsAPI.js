@@ -9,7 +9,7 @@ function SellerProductsAPI(token) {
     if (token) {
       const getProducts = async () => {
         const res = await axios.get(
-          "https://shop-clue.herokuapp.com/api/seller_product",
+          process.env.REACT_APP_BASE_URL + "/api/seller_product",
           {
             headers: { Authorization: token },
           }

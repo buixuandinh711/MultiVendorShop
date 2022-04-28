@@ -6,7 +6,7 @@ function ShopsAPI() {
   const [callback, setCallback] = useState(false);
 
   const getShops = async () => {
-    const res = await axios.get("https://shop-clue.herokuapp.com/api/shops");
+    const res = await axios.get(process.env.REACT_APP_BASE_URL + "/api/shops");
     setShops(res.data.shops);
   };
 

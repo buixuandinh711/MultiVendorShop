@@ -6,7 +6,7 @@ function CategoryAPI() {
   const [callback, setCallback] = useState(false);
 
   const getCategory = async () => {
-    const res = await axios.get("https://shop-clue.herokuapp.com/api/category");
+    const res = await axios.get(process.env.REACT_APP_BASE_URL + "/api/category");
     setCategory(res.data.categories);
   };
 

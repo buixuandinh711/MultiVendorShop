@@ -13,7 +13,7 @@ export const DataProvider = ({ children }) => {
 
   const refreshToken = async () => {
     const res = await axios.get(
-      "https://shop-clue.herokuapp.com/user/refresh_token"
+      process.env.REACT_APP_BASE_URL + "/user/refresh_token"
     );
     setToken(res.data.accessToken);
   };

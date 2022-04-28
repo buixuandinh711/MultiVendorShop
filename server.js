@@ -4,6 +4,7 @@ const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
+const path = require('path');
 
 const app = express();
 
@@ -36,6 +37,17 @@ mongoose.connect(
     console.log("DATABASE CONNECTED...");
   }
 );
+
+app.use(express.static(path.join(__dirname, 'client/build')));
+
+app.get('/', function (req, res) {
+  res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
+});
+
+app.get('/showroom', function (req, res) {
+  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+});
+
 
 app.listen(PORT, () => {
   console.log(`SERVER IS CONNECTED TO PORT ${PORT}`);

@@ -19,6 +19,7 @@ import HistoryDetails from "./screens/HistoryDetails";
 import Profile from "./screens/Profile";
 import axios from "axios";
 import NotFound from "./screens/NotFound";
+import VirtualView from './screens/VirtualView';
 import { useContext } from "react";
 
 axios.defaults.withCredentials = true;
@@ -81,6 +82,7 @@ function App() {
             component={SellerProductDetails}
           />
           <Route exact path="/shop_detail/:id" component={ShopDetail} />
+          <Route exact path="/virtual_view/:showroom_img" component={VirtualView} />
           <Route exact path="*" component={NotFound} />
         </Switch>
       </div>

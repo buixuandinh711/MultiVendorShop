@@ -110,7 +110,7 @@ function Header() {
   };
 
   const logOut = async () => {
-    await axios.get("https://shop-clue.herokuapp.com/user/logout");
+    await axios.get(process.env.REACT_APP_BASE_URL + "/user/logout");
     localStorage.clear();
     setIsAdmin(false);
     setIsSeller(false);

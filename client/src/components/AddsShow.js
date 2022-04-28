@@ -74,9 +74,11 @@ function AddsShow() {
   const state = useContext(GlobalState);
   const [products] = state.productsAPI.products;
 
-  const sell = products.filter((product) => {
-    return product.sold > 0;
-  });
+  // const sell = products.filter((product) => {
+  //   return product.sold > 0;
+  // });
+
+  const sell = products;
 
   const topSell = sell.sort(function (a, b) {
     return b - a;

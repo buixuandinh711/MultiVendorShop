@@ -16,7 +16,7 @@ function UserAPI(token) {
       const getUser = async () => {
         try {
           const res = await axios.get(
-            "https://shop-clue.herokuapp.com/user/user_info",
+            process.env.REACT_APP_BASE_URL + "/user/user_info",
             {
               headers: { Authorization: token },
             }
@@ -49,7 +49,7 @@ function UserAPI(token) {
       setCart([...cart, { ...product, quantity: 1 }]);
 
       await axios.patch(
-        "https://shop-clue.herokuapp.com/user/addcart",
+        process.env.REACT_APP_BASE_URL + "/user/addcart",
         { cart: [...cart, { ...product, quantity: 1 }] },
         {
           headers: { Authorization: token },
@@ -65,7 +65,7 @@ function UserAPI(token) {
       const getHistory = async () => {
         if (isSeller) {
           const res = await axios.get(
-            "https://shop-clue.herokuapp.com/api/order",
+            process.env.REACT_APP_BASE_URL + "/api/order",
             {
               headers: { Authorization: token },
             }
@@ -73,7 +73,7 @@ function UserAPI(token) {
           setHistory(res.data.sellerOrders);
         } else {
           const res = await axios.get(
-            "https://shop-clue.herokuapp.com/user/history",
+            process.env.REACT_APP_BASE_URL + "/user/history",
             {
               headers: { Authorization: token },
             }

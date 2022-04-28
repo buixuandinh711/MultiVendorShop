@@ -1,9 +1,11 @@
-import { Container, Grid, Grow, makeStyles } from "@material-ui/core";
+import { Button, Container, Grid, Grow, makeStyles } from "@material-ui/core";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router";
 import ProductCard from "../components/ProductCard";
 import Loading from "./Loading";
+import NoProduct from "../components/NoProduct";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -16,10 +18,22 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
+function ToVituralButton({ showroom_img }) {
+  return (
+    <Link to={`/virtual_view/${showroom_img}`}>
+      <Button
+        variant="text"
+        style={{ background: "linear-gradient(to right, #00c6ff, #0072ff)", color: "white", marginBottom: "20px" }}
+      >See Showromm</Button>
+    </Link>
+  )
+}
+
 function ShopDetail() {
   const classes = useStyles();
   const { id } = useParams();
   const [products, setProducts] = useState([]);
+  const [showroomImg, setShowroomImg] = useState("");
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -27,9 +41,11 @@ function ShopDetail() {
       if (id) {
         setLoading(true);
         const res = await axios.get(
-          `https://shop-clue.herokuapp.com/api/shops/${id}`
+          process.env.REACT_APP_BASE_URL + `/api/shops/${id}`
         );
+        console.log(res.data.showroom_img);
         setProducts(res.data.products);
+        setShowroomImg(encodeURIComponent(res.data.showroom_img));
         setLoading(false);
       }
     };
@@ -40,6 +56,7 @@ function ShopDetail() {
     <div className={classes.root}>
       <Container maxWidth="lg">
         <div className={classes.paper}>
+          <ToVituralButton showroom_img={showroomImg}/>
           <Grow in>
             <Grid container spacing={3} alignContent="stretch">
               {products
@@ -60,7 +77,7 @@ function ShopDetail() {
                 ))}
             </Grid>
           </Grow>
-          {products.length === 0 && <Loading loading={loading} />}
+          {products.length === 0 && <NoProduct/>}
         </div>
       </Container>
     </div>

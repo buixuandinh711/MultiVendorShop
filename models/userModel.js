@@ -34,10 +34,21 @@ const userSchema = mongoose.Schema(
       unique: true,
       default: "",
     },
+    showroomImg: {
+      type: String,
+      trim: true,
+      default: "",
+    },
   },
   {
     timestamps: true,
   }
 );
+userSchema.pre("save", function(next) {
+  if (!this.shopName) {
+    this.shopName = this.get('userName');
+  }
+  next();
+});
 
 module.exports = mongoose.model("User", userSchema);

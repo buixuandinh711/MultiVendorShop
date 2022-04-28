@@ -234,7 +234,7 @@ function Order() {
 
   const fetchCart = async (cart) => {
     await axios.patch(
-      "https://shop-clue.herokuapp.com/user/addcart",
+      process.env.REACT_APP_BASE_URL + "/user/addcart",
       { cart: cart },
       {
         headers: { Authorization: token },
@@ -246,7 +246,7 @@ function Order() {
     try {
       setLoading(true);
       await axios.post(
-        "https://shop-clue.herokuapp.com/api/order",
+        process.env.REACT_APP_BASE_URL + "/api/order",
         {
           cart: cart,
           district: data.district,

@@ -182,10 +182,12 @@ const productCTRL = {
   getShopDetails: async (req, res) => {
     try {
       const products = await Product.find({ user: req.params.id });
+      const shop = await User.findOne({ _id : req.params.id });
       res.json({
         status: "success",
         result: products.length,
         products: products,
+        showroom_img: shop.showroomImg,
       });
     } catch (error) {
       return res.status(500).json({ msg: error.message });

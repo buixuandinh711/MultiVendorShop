@@ -45,6 +45,7 @@ const userCTRL = {
 
       res.json({ accessToken });
     } catch (error) {
+      console.log(error);
       return res.status(500).json({ msg: error.message });
     }
   },
@@ -73,6 +74,7 @@ const userCTRL = {
 
       res.json({ accessToken });
     } catch (error) {
+      console.log(error)
       return res.status(500).json({ msg: error.message });
     }
   },
@@ -142,7 +144,7 @@ const userCTRL = {
   },
   updateUser: async (req, res) => {
     try {
-      const { fullName, password, rePassword, images, shopName } = req.body;
+      const { fullName, password, rePassword, images, shopName, showroomImg } = req.body;
       if (!fullName || !password || !rePassword) {
         return res.status(400).json({ msg: "Invalid Creadentials" });
       }
@@ -160,6 +162,7 @@ const userCTRL = {
           password: hashPass,
           images,
           shopName,
+          showroomImg,
         }
       );
       res.json({ msg: "profile updated" });

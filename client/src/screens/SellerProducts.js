@@ -69,14 +69,14 @@ function SellerProducts() {
       if (window.confirm("Want to delete this product?")) {
         setLoading(true);
         const deleteImg = axios.post(
-          "https://shop-clue.herokuapp.com/api/destroy",
+          process.env.REACT_APP_BASE_URL + "/api/destroy",
           { public_id },
           {
             headers: { Authorization: token },
           }
         );
         const deleteProduct = axios.delete(
-          `https://shop-clue.herokuapp.com/api/product/${id}`,
+          process.env.REACT_APP_BASE_URL + `/api/product/${id}`,
           {
             headers: { Authorization: token },
           }

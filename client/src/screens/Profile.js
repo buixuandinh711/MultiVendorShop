@@ -48,6 +48,7 @@ function Profile() {
   const [rePassword, setRePassword] = useState("");
   const [shopName, setShopName] = useState("");
   const [id, setId] = useState("");
+  const [showroomImg, setShowroomImg] = useState("");
   const [callback, setCallback] = state.userAPI.callback;
 
   useEffect(() => {
@@ -57,6 +58,7 @@ function Profile() {
       setUserName(user.userName);
       setShopName(user.shopName);
       setImage(user.images);
+      setShowroomImg(user.showroomImg);
     } else {
       setFullName("");
       setUserName("");
@@ -77,7 +79,7 @@ function Profile() {
       formData.append("file", file);
       setLoading(true);
       const res = await axios.post(
-        "https://shop-clue.herokuapp.com/api/upload",
+        process.env.REACT_APP_BASE_URL + "/api/upload",
         formData,
         {
           headers: {
@@ -97,7 +99,7 @@ function Profile() {
     try {
       setLoading(true);
       await axios.post(
-        "https://shop-clue.herokuapp.com/api/destroy",
+        process.env.REACT_APP_BASE_URL + "/api/destroy",
         { public_id: image.public_id },
         {
           headers: { Authorization: token },
@@ -114,13 +116,14 @@ function Profile() {
     e.preventDefault();
     try {
       await axios.put(
-        `https://shop-clue.herokuapp.com/user/user_info/${id}`,
+        process.env.REACT_APP_BASE_URL + `/user/user_info/${id}`,
         {
           fullName: fullName,
           password: password,
           rePassword: rePassword,
           images: image,
           shopName: shopName,
+          showroomImg: showroomImg,
         },
         { headers: { Authorization: token } }
       );
@@ -219,17 +222,30 @@ function Profile() {
                 value={rePassword}
               />
               {user.role === "seller" ? (
-                <TextField
-                  id="outlined-basic"
-                  label="Shop Name"
-                  type="text"
-                  variant="outlined"
-                  className={classes.inputFeild}
-                  onChange={(e) => {
-                    setShopName(e.target.value);
-                  }}
-                  value={shopName}
-                />
+                <>
+                  <TextField
+                    id="outlined-basic"
+                    label="Shop Name"
+                    type="text"
+                    variant="outlined"
+                    className={classes.inputFeild}
+                    onChange={(e) => {
+                      setShopName(e.target.value);
+                    }}
+                    value={shopName}
+                  />
+                  <TextField
+                    id="outlined-basic"
+                    label="Showroom Image Link"
+                    type="text"
+                    variant="outlined"
+                    className={classes.inputFeild}
+                    onChange={(e) => {
+                      setShowroomImg(e.target.value);
+                    }}
+                    value={showroomImg}
+                  />
+                </>
               ) : null}
               <Button onClick={handleSubmit} className={classes.button}>
                 update
