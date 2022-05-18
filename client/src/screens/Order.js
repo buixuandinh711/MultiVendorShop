@@ -130,7 +130,7 @@ const PaymentForm = () => {
             setValue(e.target.value);
           }}
         >
-          <FormControlLabel value="bkash" control={<Radio />} label="Bkash" />
+          {/* <FormControlLabel value="bkash" control={<Radio />} label="Bkash" /> */}
           <FormControlLabel
             value="cod"
             control={<Radio color="primary" />}
@@ -138,11 +138,9 @@ const PaymentForm = () => {
           />
         </RadioGroup>
       </FormControl>
-      {value === "bkash" ? (
+      {/* {value === "bkash" ? (
         <>
           <Typography style={{ margin: "15px 0" }}>
-            নাম্বারটিতে "সেন্ড মানি" তে টাকা পাঠিয়ে নিচের ফর্মটি ফিলাপ করে
-            সাবমিট করুন...
             <br />
             <strong>bKash Personal No: 01629341869</strong>
           </Typography>
@@ -177,7 +175,7 @@ const PaymentForm = () => {
             )}
           />
         </>
-      ) : null}
+      ) : null} */}
     </div>
   );
 };

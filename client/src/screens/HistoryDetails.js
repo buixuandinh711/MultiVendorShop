@@ -141,7 +141,7 @@ function HistoryDetails() {
           <Table className={classes.table} aria-label="customized table">
             <TableHead>
               <TableRow>
-                <StyledTableCell>Bkash</StyledTableCell>
+                <StyledTableCell>Pyament Type</StyledTableCell>
                 <StyledTableCell align="left">Phone</StyledTableCell>
                 <StyledTableCell align="left">Address</StyledTableCell>
                 <StyledTableCell align="right">District</StyledTableCell>

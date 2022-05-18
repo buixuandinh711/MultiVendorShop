@@ -7,9 +7,8 @@ const orderCTRL = {
     try {
       const orders = await Order.find(
         { cart: { $elemMatch: { user: req.user.id } } },
-        { "cart.$": 1 }
       ).select(
-        "fullName userName address district phone bkash trxid createdAt status"
+        "fullName userName address district phone bkash trxid createdAt status cart"
       );
       res.json({
         status: "success",
