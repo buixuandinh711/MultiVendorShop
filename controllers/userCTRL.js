@@ -145,8 +145,20 @@ const userCTRL = {
   updateUser: async (req, res) => {
     try {
       const { fullName, password, rePassword, images, shopName, showroomImg } = req.body;
-      if (!fullName || !password || !rePassword) {
+      if (!fullName) {
         return res.status(400).json({ msg: "Invalid Creadentials" });
+      }
+      if (password.length == 0 && rePassword.length == 0) {
+        await User.findOneAndUpdate(
+          { _id: req.params.id },
+          {
+            fullName: fullName,
+            images: images,
+            shopName: shopName,
+            showroomImg: showroomImg,
+          }
+        );
+        return res.json({ msg: "profile updated" });
       }
       if (password.length < 4) {
         return res.status(400).json({ msg: "Password must be 4 lengths long" });
