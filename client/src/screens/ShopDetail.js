@@ -56,7 +56,7 @@ function ShopDetail() {
     <div className={classes.root}>
       <Container maxWidth="lg">
         <div className={classes.paper}>
-          <ToVituralButton showroom_img={showroomImg}/>
+          <ToVituralButton showroom_img={id}/>
           <Grow in>
             <Grid container spacing={3} alignContent="stretch">
               {products

@@ -82,7 +82,7 @@ function App() {
             component={SellerProductDetails}
           />
           <Route exact path="/shop_detail/:id" component={ShopDetail} />
-          <Route exact path="/virtual_view/:showroom_img" component={VirtualView} />
+          <Route exact path="/virtual_view/:id" component={VirtualView} />
           <Route exact path="*" component={NotFound} />
         </Switch>
       </div>

@@ -44,9 +44,7 @@ app.get('/', function (req, res) {
   res.sendFile(path.join(__dirname, 'client/build', 'index.html'));
 });
 
-app.get('/showroom', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
-});
+app.use(express.static('public'))
 
 
 app.listen(PORT, () => {
