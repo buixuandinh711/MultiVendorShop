@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A simple example</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.css" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/pannellum@2.5.6/build/pannellum.js"></script>
+    <script type="module" src="../model-viewer.min.js"></script>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        #panorama {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+
+        .hotspot-img {
+            display: block;
+            width: auto;
+            height: auto;
+        }
+
+        .model-container {
+            display: none;
+            justify-content: center;
+            margin: 200px auto;
+            width: 40%;
+            height: 400px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -100%);
+            border: 1px black solid;
+            background-color: white;
+        }
+
+        .model-3d {
+            height: 100%;
+            width: 80%;
+        }
+
+        .close {
+            color: #aaa;
+            float: right;
+            right: 10px;
+            top: 5px;
+            position: absolute;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div>
+        <div id="panorama"></div>
+        <div class="model-container">
+            <span class="close" id="closeBtn">×</span>
+            <model-viewer class="model-3d" alt="3D Model" ar ar-modes="webxr scene-viewer quick-look" seamless-poster
+                shadow-intensity="1" camera-controls enable-pan></model-viewer>
+        </div>
+    </div>
+
+    <script>
+
+        const availablePosition = [
+            {
+                pitch: 0,
+                yaw: 163,
+            },
+            {
+                pitch: 0,
+                yaw: -163,
+            },
+            {
+                pitch: 0,
+                yaw: 129,
+            },
+            {
+                pitch: 0,
+                yaw: -129,
+            },
+            {
+                pitch: 0,
+                yaw: 88,
+            },
+            {
+                pitch: 0,
+                yaw: -88,
+            },
+            {
+                pitch: 0,
+                yaw: 48,
+            },
+            {
+                pitch: 0,
+                yaw: -48,
+            },
+
+        ]
+
+        const listHotSpots = [];
+        const listItems = ["polo", "shoes", "jean", "hand_bag"];
+        for (let i = 0; i < listItems.length; i++) {
+            const item = listItems[i];
+            const hopSpot = createHotspot(availablePosition[i], item + ".png", "20vw", "350px", item + ".glb");
+            listHotSpots.push(hopSpot);
+        }
+
+        pannellum.viewer('panorama', {
+            type: "equirectangular",
+            panorama: "../black_room_4000.jpg",
+            showFullscreenCtrl: false,
+            autoLoad: true,
+            hotSpots: listHotSpots,
+        });
+
+        function createHotspot(position, tooltipFileName, tooltipMaxWidth, tooltipMaxHeight, modelFileName) {
+            return {
+                pitch: position.pitch,
+                yaw: position.yaw,
+                "cssClass": "custom-hotspot",
+                createTooltipFunc: hotspot,
+                createTooltipArgs: {
+                    url: "./tooltip/" + tooltipFileName,
+                    maxWidth: tooltipMaxWidth,
+                    maxHeight: tooltipMaxHeight,
+                },
+                scale: true,
+                clickHandlerFunc: onClickHotspot,
+                clickHandlerArgs: {
+                    model: "./glb/" + modelFileName,
+                },
+            }
+        }
+
+        function hotspot(hotSpotDiv, args) {
+            const imageDiv = document.createElement('img');
+            imageDiv.classList.add("hotspot-img");
+            imageDiv.setAttribute('width', '100%');
+            imageDiv.setAttribute('height', '100%');
+            imageDiv.style.maxWidth = args.maxWidth;
+            imageDiv.style.maxHeight = args.maxHeight;
+            imageDiv.setAttribute('src', args.url);
+            hotSpotDiv.appendChild(imageDiv);
+        }
+
+        const modelContainer = document.getElementsByClassName("model-container")[0];
+        modelContainer.style.display = "none";
+        const modelViewer = document.getElementsByClassName("model-3d")[0]
+        console.log(modelViewer);
+
+        function onClickHotspot(pointerEvent, args) {
+            if (modelContainer.style.display === "none") {
+                modelViewer.setAttribute("src", args.model);
+                modelContainer.style.display = "flex";
+            } else {
+                modelContainer.style.display = "none";
+            }
+        }
+
+        const closeButton = document.getElementsByClassName("close")[0];
+        closeButton.onclick = function () {
+            modelContainer.style.display = "none";
+        };
+
+    </script>
+
+</body>
+
+</html>

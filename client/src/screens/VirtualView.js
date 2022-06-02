@@ -1,14 +1,9 @@
 import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core";
-// import Filters from "../components/Filters";
-// import { GlobalState } from "../GlobalState";
-// import ProductCard from "../components/ProductCard";
-// import Loading from "./Loading";
-// import LoadMore from "../components/LoadMore";
-// import AddsShow from "../components/AddsShow";
 import axios from "axios";
 import { Pannellum } from "pannellum-react";
 import { useParams } from "react-router";
+import Iframe from 'react-iframe';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -20,24 +15,17 @@ const useStyles = makeStyles((theme) => ({
 function VirtualView() {
   const classes = useStyles();
 
-  const { showroom_img } = useParams();
-  const showroomImg = decodeURIComponent(showroom_img);
-  console.log(showroomImg);
+  const { id } = useParams();
+
+  console.log(process.env.REACT_APP_BASE_URL + "/virtual-showroom/" + id + "/index.html");
 
   return (
     <div className={classes.root}>
-      <Pannellum
+      <Iframe url={process.env.REACT_APP_BASE_URL + "/virtual-showroom/" + id + "/index.html"}
         width="100%"
-        height="500px"
-        image={decodeURIComponent(showroomImg)}
-        pitch={10}
-        yaw={180}
-        hfov={110}
-        autoLoad
-        onLoad={() => {
-          console.log("panorama loaded");
-        }}
-      ></Pannellum>
+        height="600px"
+        display="initial"
+        position="relative" />
     </div>
   );
 }
